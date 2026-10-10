@@ -1,0 +1,32 @@
+# Data (tracked via Git LFS or kept local; raw/processed binaries excluded from plain git)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Environments
+venv/
+.venv/
+env/
+.conda/
+.env
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
+
+# Jupyter
+*.ipynb_checkpoints
+
+# Large artifacts
+*.pkl
+*.joblib
+*.h5
