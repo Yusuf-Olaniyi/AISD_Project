@@ -1,0 +1,22 @@
+file,doc_kind,subject,class_level,pages,units_found,items,n_MCQ,n_TF,n_FILL,n_MATCH,n_OPEN,tg_answers_found,additional_items,answer_key_mentions,status
+P4 Creative Arts PB 2026-2027.pdf,PB,Creative Arts - Fine Arts & Music,4,76,0,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P4 Creative Arts TG 2026-2027.pdf,TG,Creative Arts - Fine Arts & Music,4,144,4,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P4 English PB 2026-2027.pdf,PB,English,4,121,0,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P4 English-TG 2026-2027.pdf,TG,English,4,168,10,69,0,0,14,3,52,0,69,2,ok
+P4 PES TG F 2026-2027....pdf,TG,Physical Education and Sports,4,237,9,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P4 SET PB 2026_2027.....pdf,PB,Science and Elementary Technology,4,191,8,137,22,22,32,3,58,0,0,0,ok
+P4 SET TG F 2026-2027...pdf,TG,Science and Elementary Technology,4,225,12,142,2,0,2,1,137,124,142,0,ok
+P4 SST PB F 2026-2027....pdf,PB,Social Studies and Religious Education,4,149,0,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P4-P6 English Syllabus 2026.pdf,PB,P6 English Syllabus 2026,4,187,0,0,0,0,0,0,0,0,0,1,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P4-P6 SST and Religious syllabus.pdf,PB,P6 SST and Religious syllabus,4,177,0,0,0,0,0,0,0,0,0,1,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P5 Creative Arts PB 2026-2027.pdf,PB,Creative Arts - Fine Arts & Music,5,74,0,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P5 English PB 2026-2027.pdf,PB,English,5,145,0,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P5 PES TG F 2026-2027....pdf,TG,Physical Education and Sports,5,198,8,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P5 SET PB For 2026_2027 cf ..pdf,PB,Science and Elementary Technology,5,203,9,149,55,23,29,1,41,0,0,0,ok
+P5 SST PB F 2026-2027....pdf,PB,Social Studies and Religious Education,5,138,0,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P6 Creative Arts PB 2026-2027.pdf,PB,Creative Arts - Fine Arts & Music,6,82,0,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P6 Creative Arts TG 2026-2027.pdf,TG,Creative Arts - Fine Arts & Music,6,127,3,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P6 PES TG F 2026-2027....pdf,TG,Physical Education and Sports,6,200,8,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
+P6 SET PB For 2026_2027 cf.pdf,PB,Science and Elementary Technology,6,232,14,259,87,40,76,2,54,0,0,0,ok
+P6 SET TG F 2026-2027...pdf,TG,Science and Elementary Technology,6,260,14,169,0,2,17,1,149,246,169,0,ok
+P6 SST PB F 2026-2027....pdf,PB,Social Studies and Religious Education,6,188,0,0,0,0,0,0,0,0,0,0,SKIPPED: nothing parsed (no end-of-unit assessments / answers found)
