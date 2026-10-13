@@ -1,69 +1,70 @@
-# SMS AI Tutor — Adaptive Scheduler: Data Preprocessing
+# SMS AI Tutor: Data Preprocessing
 
-**Course:** 04-652 Artificial Intelligence System Design — Assignment 2 (Data Preprocessing)
+Course project for 04-652 AI System Design, Assignment 2 (Data Preprocessing).
 
-## Problem Statement
+An SMS-based tutor gives upper-primary learners in Rwanda science and technology revision on basic feature phones
+(SDG 4, Quality Education). It sends a question from the REB Pupil's Book, reads the pupil's reply, and checks whether
+the reply is correct. This repo holds the data work for that system: the real questions, the extraction script,
+the Phase 1 strategy and, later, the Phase 2 preprocessing pipeline.
 
-Predict whether a pupil will answer a given Science & Elementary Technology (SET) revision
-item correctly on their next attempt, using that pupil's response history (prior accuracy,
-time since last attempt, attempt number, sub-topic). This prediction drives the **adaptive
-mastery scheduler** in the SMS AI Tutor system design: the scheduler uses it to prioritize
-which item to resurface next over SMS, personalizing revision order for Upper Primary pupils
-in Rwanda who access the tutor over basic feature phones (see the project's system design
-proposal, Section III — AI System Design and Task Formulation).
+## Status
 
-## Dataset Overview
+| Item | State |
+|---|---|
+| Item extraction from P4-P6 SET | done |
+| Answer keys / "is the student correct" label | to decide (see `PROJECT_LOG.md`) |
+| Phase 1 strategy report | done|
+| Phase 2 pipeline, 8 figures, final report | not started |
 
-- **Source:** Synthetic simulation (`data/raw/pupil_response_log.csv`), generated to carry
-  realistic structure — genuine MCAR/MAR/MNAR missingness mechanisms, skewed latency
-  distributions, and outliers — in the absence of real pilot data. No live pilot has been
-  run yet (see the design proposal's Limitations section); this dataset stands in for what
-  the scheduler's real training log will look like once deployed.
-- **Sample size (N):** 4,947 response-event rows, spanning 220 simulated pupils, 88 items,
-  and 11 REB SET sub-topics.
-- **Feature count (P):** 9 raw columns (3 identifiers, 5 predictive features, 1 target).
-- **Target variable (Y):** `is_correct` — binary (1 = correct, 0 = incorrect or SMS timeout).
-
-## Task Type
-
-**Binary Classification.**
-
-## Repository Structure
-
-See `phase1_strategy/Phase1_Strategy_Report.pdf` for the full preprocessing audit and
-strategy (missingness mechanism diagnosis, outlier rules, encoding/scaling plan, and
-leakage-prevention architecture). Phase 2 (pipeline implementation + diagnostic figures)
-is tracked under `phase2_implementation/`.
+## Quick start
 
 ```
-.
-├── data/
-│   ├── raw/                 # pupil_response_log.csv (synthetic, see Phase 1 report)
-│   └── processed/           # populated in Phase 2
-├── phase1_strategy/
-│   └── Phase1_Strategy_Report.pdf
-├── phase2_implementation/
-│   ├── notebooks/           # pipeline_execution.ipynb (Phase 2)
-│   └── Phase2_Final_Report.pdf   (Phase 2)
-├── src/
-│   ├── transformers.py      # custom sklearn transformers (stubs; implemented in Phase 2)
-│   └── pipeline_builder.py  # ColumnTransformer / Pipeline definitions (stubs)
-└── figures/                 # 8 diagnostic figures (Phase 2 deliverable)
-```
-
-## Environment
-
-```bash
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-# or: conda env create -f environment.yml
+python src/extract_items.py
 ```
 
-## Reproduction
+Run it from the repo root. It reads every `.pdf` and `.txt` file in `data/raw/raw_pdfs/` and writes
+`data/raw/items.csv` and `data/raw/extraction_report.csv`. Check the report after each run: a book with 0 items or an
+odd split of item types needs a rule fix in the extractor.
 
-1. `data/raw/pupil_response_log.csv` is the raw, untouched dataset.
-2. Phase 1 strategy (what will be done and why) is documented in
-   `phase1_strategy/Phase1_Strategy_Report.pdf`.
-3. Phase 2 (due Oct 18, 2026) will implement that strategy in
-   `phase2_implementation/notebooks/pipeline_execution.ipynb` using the modular
-   transformers in `src/`, and report any strategy-vs-reality deviations in
-   `phase2_implementation/Phase2_Final_Report.pdf`.
+To use other folders: `python src/extract_items.py <book_folder> <output.csv>`.
+
+PDFs are read with poppler's `pdftotext` if it is installed, otherwise with `pypdf`. `.txt` exports always work.
+Optional: `python -m pytest` runs a smoke test of the extractor.
+
+## Folder layout
+
+```
+data/
+  raw/
+    raw_pdfs/        REB Pupil's Books (.pdf git-ignored, .txt tracked)
+    items.csv            one row per end-of-unit question (generated)
+    extraction_report.csv  one row per book (generated)
+    README.md            how extraction works and every column
+  processed/             pipeline outputs (Phase 2)
+src/
+  extract_items.py       book files -> items.csv
+  transformers.py        custom scikit-learn transformers (Phase 2)
+  pipeline_builder.py    preprocessing pipeline (Phase 2)
+phase1_strategy/         Phase 1 report
+phase2_implementation/   notebook and final report
+figures/                 figures for the reports
+tests/                   smoke test for the extractor
+PROJECT_LOG.md           decisions and changes, newest first
+```
+
+## Data
+
+Source: Rwanda Basic Education Board (REB), Science and Elementary Technology Pupil's Book, Primary 6,
+end-of-unit assessments. Items are extracted with regex rules, with no manual retyping and no language model.
+The book contains no answer keys and no student responses, so `answer_key` is empty for now.
+Column definitions are in `data/raw/README.md`.
+
+## Known limits
+
+- Only end-of-unit assessments are read, not in-lesson activities.
+- Only P6 SET has been tested; other books may need rule changes.
+- Matching questions (2 so far) stay as one row and are not split into parts.
+- `src/transformers.py` and `src/pipeline_builder.py` are Phase 2 stubs, with column lists to be fixed by the Phase 1 plan.
