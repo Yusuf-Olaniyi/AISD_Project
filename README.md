@@ -65,6 +65,5 @@ Column definitions are in `data/raw/README.md`.
 ## Known limits
 
 - Only end-of-unit assessments are read, not in-lesson activities.
-- Only P6 SET has been tested; other books may need rule changes.
 - Matching questions (2 so far) stay as one row and are not split into parts.
 - `src/transformers.py` and `src/pipeline_builder.py` are Phase 2 stubs, with column lists to be fixed by the Phase 1 plan.
