@@ -35,7 +35,7 @@ written by a language model under a fixed specification: one correct reply, writ
 wrong ones (a typical misconception, a partly right reply, an off-topic reply). That gives 25% positive, an imbalance
 ratio of 3:1. A separate real-life set, labelled by people, is kept for the final test.
 
-**Features of the raw item table** (full definitions in `data/raw/README.md`):
+**Features of the raw item table**
 
 | Group | Columns | Type | Use in the model |
 |---|---|---|---|
