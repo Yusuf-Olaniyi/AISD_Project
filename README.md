@@ -1,6 +1,6 @@
 # SMS AI Tutor
 
-Course project for 04-652 AI System Design, Assignment 2 (Data Preprocessing).
+Course project for 04-652 AI System Design.
 
 An SMS-based tutor gives upper-primary learners in Rwanda science and technology revision on basic feature phones
 (SDG 4, Quality Education). It sends a question from the REB Pupil's Book, reads the pupil's reply, and checks whether
@@ -31,7 +31,7 @@ odd split of item types needs a rule fix in the extractor.
 
 To use other folders: `python src/extract_items.py <book_folder> <output.csv>`.
 
-PDFs are read with poppler's `pdftotext` if it is installed, otherwise with `pypdf`. `.txt` exports always work.
+PDFs are read with poppler's `pdftotext` if it is installed; otherwise with `pypdf`. `.txt` exports always work.
 Optional: `python -m pytest` runs a smoke test of the extractor.
 
 ## Folder layout
