@@ -1,4 +1,4 @@
-# SMS AI Tutor: Data Preprocessing
+# SMS AI Tutor
 
 Course project for 04-652 AI System Design, Assignment 2 (Data Preprocessing).
 
