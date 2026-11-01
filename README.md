@@ -27,13 +27,17 @@ supplied. No source contains pupil replies.
 | Table | Rows (N) | Columns (P) | State |
 |---|---|---|---|
 | Raw item table, `data/raw/items.csv` | 965 (P4 387, P5 149, P6 429) | 28 | built; 678 rows have an official answer |
-| Modelling table, one row per (item, candidate reply) | about 2,152 (538 items x 4 replies) | roughly 25 to 30 after encoding | planned |
+| Modelling table, one row per (item, candidate reply) | 170 usable items x the replies per item (to be fixed) | roughly 25 to 30 after encoding | planned |
 
-The 538 items are the Science rows that have a question text and an answer, need no picture or computer, and have an
-answer of at most 160 characters (it must fit in one SMS reply): P4 201, P6 337. Each item gets four candidate replies
-written by a language model under a fixed specification: one correct reply, written as a pupil would send it, and three
-wrong ones (a typical misconception, a partly right reply, an off-topic reply). That gives 25% positive, an imbalance
-ratio of 3:1. A separate real-life set, labelled by people, is kept for the final test.
+**Scope: multiple-choice and true/false only.** `src/clean_items.py` keeps the 359 MCQ and TF rows (after fixing item types
+and splitting bundled statements) and leaves out fill-in, open and matching items. 170 of them are usable for modelling:
+they have a question text, a trusted answer key, and need no picture or computer (P4 58, P6 112; P5 has no answer keys yet).
+The question and the answer are kept in two tables joined by `item_id`: `data/processed/questions.csv` (question text, options,
+SMS fields; no answer) and `data/processed/answers.csv` (answer letter or True/False, and the answer wording).
+
+For each item, a language model writes candidate replies under a fixed specification: correct replies written as a pupil would
+send them (a letter, the answer in words, shorthand, typos) and wrong or partly right ones. The label is `is_correct`. A separate
+real-life set, labelled by people, is kept for the final test.
 
 **Features of the raw item table**
 
@@ -70,6 +74,12 @@ a tuned threshold, and otherwise asks the pupil to try again.
 
 **Models compared.**
 
+**Status.** Designed in Phase 1, to be trained in Phase 2. This repo does not report any trained-model results yet.
+
+**Input and output.** For one (item, reply) pair the model reads the preprocessed item features and the reply-to-answer
+features, and returns the probability that the reply is correct. The tutor accepts the reply when the probability passes
+a tuned threshold, and otherwise asks the pupil to try again.
+
 | Model | Role |
 |---|---|
 | Exact / fuzzy string match | baseline: what the project is meant to beat |
@@ -96,6 +106,7 @@ this data.
 | Item extraction (P4, P5, P6 Science; P4 English guide) | done, 965 rows; known fixes listed in the Phase 1 report, section 5 |
 | Phase 1 strategy report | done: `phase1_strategy/Phase1_Strategy_Report.pdf` |
 | P5 answer keys | blocked: P5 Teacher's Guide not yet supplied |
+| Data cleaning (`src/clean_items.py`) | done: MCQ and TF only, 359 rows kept, 170 usable (P4 58, P6 112); question and answer in separate tables |
 | Reply generation (`data/raw/replies.csv`) | not started |
 | Phase 2 pipeline, 8 figures, final report | not started |
 
@@ -106,10 +117,11 @@ python -m venv .venv
 source .venv/bin/activate        # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 python src/extract_items.py
+python src/clean_items.py                  # data/raw/items.csv -> data/processed/ (questions.csv, answers.csv, items_clean.csv, cleaning_log.csv)
 python phase1_strategy/phase1_audit.py     # reprints every number in the Phase 1 report
 ```
 
-Run it from the repo root. It reads every `.pdf` and `.txt` file in `data/raw/source_books/` and writes
+Run it from the repo root. It reads every `.pdf` and `.txt` file in `data/raw/raw_pdfs/` and writes
 `data/raw/items.csv` and `data/raw/extraction_report.csv`. Check the report after each run: a book with 0 items or an
 odd split of item types needs a rule fix in the extractor.
 
@@ -123,13 +135,14 @@ Optional: `python -m pytest` runs a smoke test of the extractor.
 ```
 data/
   raw/
-    source_books/        REB Pupil's Books (.pdf git-ignored, .txt tracked)
+    raw_pdfs/        REB Pupil's Books (.pdf git-ignored, .txt tracked)
     items.csv            one row per end-of-unit question (generated)
     extraction_report.csv  one row per book (generated)
     README.md            how extraction works and every column
-  processed/             pipeline outputs (Phase 2)
+  processed/             questions.csv, answers.csv, items_clean.csv, cleaning_log.csv and later outputs (git-ignored, rebuilt by the scripts)
 src/
   extract_items.py       book files -> items.csv
+  clean_items.py         items.csv -> questions.csv + answers.csv (MCQ and TF only), with a log of every change
   transformers.py        custom scikit-learn transformers (Phase 2)
   pipeline_builder.py    preprocessing pipeline (Phase 2)
 phase1_strategy/         Phase 1 report and the script that reproduces its numbers (phase1_audit.py)
@@ -144,4 +157,4 @@ PROJECT_LOG.md           decisions and changes, newest first
 - Only end-of-unit assessments are read, not in-lesson activities.
 - The P4 Science Pupil's Book parse returned 8 of 12 units, and `unit_title` is unreliable (see the Phase 1 report, section 5).
 - Matching questions (2 so far) stay as one row and are not split into parts.
-- `src/transformers.py` and `src/pipeline_builder.py` are Phase 2 stubs, with column lists to be fixed by the Phase 1 plan.
+- `src/transformers.py` and `src/pipeline_builder.py` are Phase 2 stubs, with column lists to be fixed by the Phase 1 plan.fixed by the Phase 1 plan.
